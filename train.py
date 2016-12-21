@@ -4,7 +4,7 @@ from __future__ import division
 
 
 from tensorflow.examples.tutorials.mnist import input_data
-from model import inference, loss, train_op, validate, DIM, NUM_CLASSES
+from model import inference, loss, train_op, validate
 import tensorflow as tf
 
 
@@ -22,13 +22,8 @@ def main():
     validation_accuracy = validate(logits, labels)
     cross_entropy = loss(logits, labels)
     train = train_op(cross_entropy)
-    # print(inputs.name)
-    # print(labels.name)
-    # print(logits.name)
-    # print(cross_entropy.name)
-    # print(train.name)
-    init = tf.initialize_all_variables()
-    saver = tf.train.Saver()
+    init = tf.global_variables_initializer()
+    saver = tf.train.Saver(sharded=False)
     with tf.Session() as sess:
         sess.run(init)
         try:
@@ -47,9 +42,7 @@ def main():
                     })
                     print("validation accuracy: %f" % valid_accuracy)
                     if valid_accuracy > 0.75:
-                        tf.train.write_graph(sess.graph_def, "protobuf", "train.pb", False)
-                        saver.save(sess=sess, save_path="protobuf/model.ckpt")
-                        saver.export_meta_graph("protobuf.meta")
+                        saver.save(sess=sess, save_path="protobuf/model.ckpt", write_meta_graph=True)
                         break
         except KeyboardInterrupt:
             print("stopping!")
