@@ -21,4 +21,9 @@ the dirty work for you(including restore weights and graph structure)
 this function internally calls `tf.import_graph_def` function which only restores graph and `saver.restore` 
 which only restores weights of this graph
 
+**this function can only be used in tensorflow version 0.12 or later**
+
+##TODO:
+change value of variable
+
 
