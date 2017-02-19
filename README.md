@@ -24,6 +24,6 @@ which only restores weights of this graph
 **this function can only be used in tensorflow version 0.12 or later**
 
 ##TODO:
-change value of variable
+new api `tf.saved_model` is avaiable in tensorflow 1.0, add example for its usage
 
 
